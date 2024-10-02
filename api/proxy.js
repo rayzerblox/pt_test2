@@ -4,13 +4,18 @@ module.exports = async (req, res) => {
   const targetUrl = 'https://app-polytrack.kodub.com';
 
   try {
+    // Make a GET request to the external URL
     const response = await axios.get(targetUrl, {
-      responseType: 'text'  // Serve HTML content as text
+      responseType: 'text',  // Get HTML content as text
     });
-    
-    res.setHeader('Content-Type', 'text/html');  // Set the correct content type
-    res.status(200).send(response.data);  // Send the content to your iframe
+
+    // Set the content type to HTML and send the content back
+    res.setHeader('Content-Type', 'text/html');
+    res.status(200).send(response.data);
   } catch (error) {
-    res.status(500).send('Error proxying the content');
+    console.error('Error fetching external content:', error.message); // Log the error
+
+    // Return a more helpful error message
+    res.status(500).send('Internal Server Error: Failed to load external content');
   }
 };
