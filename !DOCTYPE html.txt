@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iframe Example</title>
+</head>
+<body>
+
+    <!-- Example Content -->
+    <h1>My Website</h1>
+
+    <!-- iframe with id "app" -->
+    <iframe id="app" src="https://app-polytrack.kodub.com" width="600" height="400"></iframe>
+
+    <!-- Your JavaScript code -->
+    <script>
+        var iframe = document.getElementById("app");
+        iframe.addEventListener("load", function() {
+            this.focus();
+        });
+
+        window.addEventListener("message", function(event) {
+            var domain = "https://app-polytrack.kodub.com";
+            if (event.origin == domain) {
+                if (event.data.hasOwnProperty("replaceState")) {
+                    window.history.replaceState(null, "", event.data["replaceState"]);
+                }
+            }
+        });
+    </script>
+
+</body>
+</html>
